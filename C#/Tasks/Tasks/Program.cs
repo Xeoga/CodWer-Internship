@@ -24,8 +24,38 @@ mare
  */
 using System;
 using System.ComponentModel.Design;
+void Task3()
+{
+    Console.WriteLine("Enter names: ");
+    string input = Console.ReadLine();
+    string[] names = input.Split(' ');
+    foreach (var name in names)
+    {
+        string nume = name.ToLower();
+        Dictionary<char, int> frecventaCaractere = new Dictionary<char, int>();
+        foreach (char caracter in nume)
+        {
+            if (Char.IsLetter(caracter))
+            {
+                if (frecventaCaractere.ContainsKey(caracter))
+                {
+                    frecventaCaractere[caracter]++;
+                }
+                else
+                {
+                    frecventaCaractere[caracter] = 1;
+                }
+            }
+        }
+        Console.WriteLine(name);
+        Console.WriteLine("Frecventa caracterelor:");
 
-
+        foreach (var entry in frecventaCaractere)
+        {
+            Console.WriteLine($"{entry.Key}: {entry.Value}");
+        }
+    }
+}
 void Task2()
 {
     Console.WriteLine("Enter number: ");
