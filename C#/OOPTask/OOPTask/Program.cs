@@ -35,8 +35,8 @@ public abstract class Animal
     public abstract double Energie();
     public void Alearga (decimal distanta)
     {
-        decimal timp = distanta / (viteza
-            / Energie());
+        double timp = Convert.ToDouble(distanta) / (Convert.ToDouble(viteza) / Energie());
+        Console.WriteLine("timp = " + timp);
     }
 }
 
@@ -48,7 +48,9 @@ public class Carnivor : Animal
 
     public override double Energie()
     {
-        throw new NotImplementedException();
+        decimal sumaEnergieMancare = stomac.Sum(Mancare => Mancare.greutate); // Nu sunt sigur ca trebue sa lucreze in felul dat
+        decimal mediaGreutateMancare = sumaEnergieMancare / stomac.Count;
+        return 0.5 + (1.0 / 3.0) * (double)(mediaGreutateMancare + sumaEnergieMancare);
     }
 }
 public class Erbivor : Animal
