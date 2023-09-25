@@ -1,0 +1,14 @@
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\bin\Release\net6.0\OOPTask.exe
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\bin\Release\net6.0\OOPTask.deps.json
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\bin\Release\net6.0\OOPTask.runtimeconfig.json
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\bin\Release\net6.0\OOPTask.dll
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\bin\Release\net6.0\OOPTask.pdb
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.AssemblyInfoInputs.cache
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.AssemblyInfo.cs
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.csproj.CoreCompileInputs.cache
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.dll
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\refint\OOPTask.dll
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.pdb
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\OOPTask.genruntimeconfig.cache
+C:\Users\H1p\Desktop\Practica\CodWer-Internship\C#\OOPTask\OOPTask\obj\Release\net6.0\ref\OOPTask.dll

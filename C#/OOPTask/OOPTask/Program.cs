@@ -1,93 +1,187 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
-public struct dimensiune
+namespace T1
 {
-    decimal lungime;
-    decimal latime;
-    decimal inaltime;
-};
-public abstract class Animal
-{
-    public Animal(string c_name,decimal c_greutate,dimensiune c_dimesiune, decimal c_viteza)
-    {
-        c_name = name;
-        c_greutate = greutate;
-        c_viteza = viteza;
-        c_dimesiune = dim;
 
-    }
-    public string name { get; set; }
-    public decimal greutate { get; set; }
-    public dimensiune dim;
-    public decimal viteza { get; set; }
-    protected List<Mancare> stomac = new List<Mancare>();
-
-    public void Mananca(Mancare m)
+    public struct dimensiune
     {
-        if (greutate / 8 <= 1)
+        public decimal lungime { get; set; }
+        public decimal latime { get; set; }
+        public decimal inaltime { get; set; }
+        public dimensiune (decimal _lungime, decimal _latime, decimal _inaltime)
         {
-            Console.WriteLine("mananca");
-            stomac.Add(m);
-        }    
-    }
-    public abstract double Energie();
-    public void Alearga (decimal distanta)
+            lungime = _lungime;
+            latime = _latime;
+            inaltime = _inaltime;
+        }
+    };
+    public abstract class Animal
     {
-        double timp = Convert.ToDouble(distanta) / (Convert.ToDouble(viteza) / Energie());
-        Console.WriteLine("timp = " + timp);
-    }
-}
+        public Animal(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza)
+        {
+            name = c_name;
+            greutate = c_greutate;
+            viteza = c_viteza;
+            dim = c_dimesiune;
+            count++;
 
-public class Carnivor : Animal
-{
-    public Carnivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+        }
+        static int count;
+        public static string name { get; set; }
+        protected decimal greutate { get; set; }
+        protected dimensiune dim;
+        protected decimal viteza { get; set; }
+        protected List<Mancare> stomac = new List<Mancare>();
+        public override string ToString()
+        {
+            return $"==================================\n"+
+                   $"Tip animal: {this.GetType().Name}\n" +
+                   $"Nume: {name}\n" +
+                   $"Greutate: {greutate} kg\n" +
+                   $"Dimensiuni: {dim.lungime} x {dim.latime} x {dim.inaltime}\n" +
+                   $"Viteza: {viteza} kg\n";
+        }
+        public abstract void Mananca(Mancare m);
+       
+        public abstract double Energie();
+        public void Alearga(decimal distanta)
+        {
+            decimal timp = distanta / (viteza / Convert.ToDecimal(Energie()));
+            Console.WriteLine($"timpul = {timp} secunde");
+        }
+        public int numar()
+        {
+            return count;
+        }
+    }
+    public class Carnivor : Animal
     {
+        public Carnivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+        {
+        }
+        public override void Mananca(Mancare m)
+        {
+            if (m is Carne)
+                if (m.greutate <= this.greutate / 8)
+                {
+                    stomac.Add(m);
+                    Console.WriteLine("Mananca");
+                }
+        }
+        public override double Energie()
+        {
+            decimal mediaGreutateMan = stomac.Sum(man => man.greutate) / stomac.Count();
+            decimal sumEnerg = stomac.Sum(man => man.energie);
+            return 0.2 - 1 / 5 * Convert.ToDouble(mediaGreutateMan) + Convert.ToDouble(sumEnerg);
+        }
     }
-
-    public override double Energie()
+    public class Erbivor : Animal
     {
-        decimal sumaEnergieMancare = stomac.Sum(Mancare => Mancare.greutate); // Nu sunt sigur ca trebue sa lucreze in felul dat
-        decimal mediaGreutateMancare = sumaEnergieMancare / stomac.Count;
-        return 0.5 + (1.0 / 3.0) * (double)(mediaGreutateMancare + sumaEnergieMancare);
+        public Erbivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+        {
+        }
+        public override void Mananca(Mancare m)
+        {
+            if (m is Planta)
+                if (m.greutate <= this.greutate / 8)
+                {
+                    stomac.Add(m);
+                    Console.WriteLine("Mananca");
+                }
+        }
+
+        public override double Energie()
+        {
+            decimal mediaGreutateMan = stomac.Sum(man => man.greutate) / stomac.Count();
+            decimal sumEnerg = stomac.Sum(man => man.energie);
+            return 0.5 - 1 / 3 * Convert.ToDouble(mediaGreutateMan) + Convert.ToDouble(sumEnerg);
+        }
     }
-}
-public class Erbivor : Animal
-{
-    public Erbivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+    public class Omnivor : Animal
     {
+        public Omnivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+        {
+        }
+        public override void Mananca(Mancare m)
+        {
+            if (m.greutate <= this.greutate / 8)
+            {
+                stomac.Add(m);
+                Console.WriteLine("Mananca");
+            }
+        }
+        public override double Energie()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public override double Energie()
+    public abstract class Mancare
     {
-        throw new NotImplementedException();
+        public decimal greutate { get; set; }
+        public decimal energie { get; set; }
     }
-}
-public class Omnivor : Animal
-{
-    public Omnivor(string c_name, decimal c_greutate, dimensiune c_dimesiune, decimal c_viteza) : base(c_name, c_greutate, c_dimesiune, c_viteza)
+    public class Carne : Mancare
     {
-    }
 
-    public override double Energie()
+    }
+    public class Planta : Mancare
     {
-        throw new NotImplementedException();
+
     }
-}
+    public class Program
+    {
+        enum TipAnimal { Lup, Urs, Oaie, Veverita, Pisica, Vaca };
+        static Animal CreeazaAnimal(TipAnimal animal_tip, string _name, decimal _greutatea, dimensiune _dim, decimal _viteza)
+        {
+            if (animal_tip == TipAnimal.Lup || animal_tip == TipAnimal.Pisica)
+            {
+                return new Carnivor(_name, _greutatea, _dim, _viteza);
+            }
+            else if (animal_tip == TipAnimal.Oaie || animal_tip == TipAnimal.Vaca)
+            {
+                return new Erbivor(_name, _greutatea, _dim, _viteza);
+            }
+            else
+            {
+                return new Omnivor(_name, _greutatea, _dim, _viteza);
+            }
+        }
+        public static void Main(string[] args)
+        {
+            Carnivor lup = (Carnivor)CreeazaAnimal(TipAnimal.Lup, "Fedea", 70, new dimensiune(30, 40, 50), 10);
+            dimensiune dLup = new dimensiune(20, 10, 40);
+            Carnivor Lup = new Carnivor("Jora", 150, dLup, 12);
+            dimensiune dOaie = new dimensiune(10, 5, 20);
+            Erbivor Oaie = new Erbivor("Prietenul_lui_Jora", 100, dOaie, 12);
+            dimensiune dUrs = new dimensiune(100, 100, 100);
+            Omnivor Urs = new Omnivor("Pasoc", 200, dUrs, 120);
+            Planta salata = new Planta();
+            Carne sunca = new Carne();
 
-public abstract class Mancare
-{
-    public decimal greutate { get; set; }
-    public decimal energie { get; set; }
-}
-public class Carne : Mancare 
-{
+            Lup.Mananca(sunca);
+            Lup.Mananca(sunca);
 
-}
-public class Planta : Mancare
-{
+            Oaie.Mananca(salata);
+            Oaie.Mananca(salata);
+            Oaie.Mananca(salata);
 
+            Urs.Mananca(sunca);
+            Urs.Mananca(salata);
+
+            Console.WriteLine(Urs);
+
+            // Este impartirea la 0 returneaza eroare:
+            //Lup.Alearga(200);
+            //Oaie.Alearga(200);
+            //Urs.Alearga(200);
+
+
+            //Animal CreeazaAnimal(
+
+        }
+    }
 }
 
 
