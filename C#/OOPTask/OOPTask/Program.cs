@@ -150,7 +150,8 @@ namespace T1
         }
         public static void Main(string[] args)
         {
-            Carnivor lup = (Carnivor)CreeazaAnimal(TipAnimal.Lup, "Fedea", 70, new dimensiune(30, 40, 50), 10);
+            Animal lup = (Animal)CreeazaAnimal(TipAnimal.Lup, "Fedea", 70, new dimensiune(30, 40, 50), 10);
+
             dimensiune dLup = new dimensiune(20, 10, 40);
             Carnivor Lup = new Carnivor("Jora", 150, dLup, 12);
             dimensiune dOaie = new dimensiune(10, 5, 20);
@@ -170,16 +171,75 @@ namespace T1
             Urs.Mananca(sunca);
             Urs.Mananca(salata);
 
-            Console.WriteLine(Urs);
-
             // Este impartirea la 0 returneaza eroare:
             //Lup.Alearga(200);
             //Oaie.Alearga(200);
             //Urs.Alearga(200);
 
+            Console.WriteLine(Urs);
 
-            //Animal CreeazaAnimal(
+            List<Animal> listaGoala = new List<Animal>();
 
+            for (int i = 0; i < 10; i++)
+            {
+                Random random = new Random();
+                int numarAliator = random.Next(0, 3);
+                if (numarAliator == 0)
+                {
+                    Array animal = Enum.GetValues(typeof(TipAnimal));
+                    int indexAleatoriu = random.Next(animal.Length);
+                    TipAnimal animalAliator = (TipAnimal)animal.GetValue(indexAleatoriu);
+                    string name = animalAliator.ToString();
+                    decimal deciAliator = random.Next(0, 55);
+                    listaGoala.Add(CreeazaAnimal(animalAliator, name, deciAliator, new dimensiune(random.Next(0, 20), random.Next(0, 20), random.Next(0, 20)), random.Next(0, 100)));
+                }
+                else if (numarAliator == 1)
+                {
+                    Array animal = Enum.GetValues(typeof(TipAnimal));
+                    int indexAleatoriu = random.Next(animal.Length);
+                    TipAnimal animalAliator = (TipAnimal)animal.GetValue(indexAleatoriu);
+                    string name = animalAliator.ToString();
+                    decimal deciAliator = random.Next(0, 55);
+                    listaGoala.Add(CreeazaAnimal(animalAliator, name, deciAliator, new dimensiune(random.Next(0, 20), random.Next(0, 20), random.Next(0, 20)), random.Next(0, 100)));
+                }
+                else
+                {
+                    Array animal = Enum.GetValues(typeof(TipAnimal));
+                    int indexAleatoriu = random.Next(animal.Length);
+                    TipAnimal animalAliator = (TipAnimal)animal.GetValue(indexAleatoriu);
+                    string name = animalAliator.ToString();
+                    decimal deciAliator = random.Next(0, 55);
+                    listaGoala.Add(CreeazaAnimal(animalAliator, name, deciAliator, new dimensiune(random.Next(0, 20), random.Next(0, 20), random.Next(0, 20)), random.Next(0, 100)));
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine(listaGoala[i]);
+                if (listaGoala[i] is Carnivor)
+                {
+                    Carne Sunca = new Carne();
+                    listaGoala[i].Mananca(Sunca);
+                }
+                else if (listaGoala[i] is Erbivor)
+                {
+                    Planta Earba = new Planta();
+                    listaGoala[i].Mananca(Earba);
+                }
+                else
+                {
+                    Carne Sunca = new Carne();
+                    listaGoala[i].Mananca(Sunca);
+                }
+            }
+
+
+            int animaleMancare = listaGoala.Count(animal => animal is Animal);
+            int animaleCarne = listaGoala.Count(animal => animal is Carnivor);
+            int animalePlante = listaGoala.Count(animal => animal is Erbivor);
+
+            Console.WriteLine($"{animaleMancare} animale mănâncă mâncare.");
+            Console.WriteLine($"{animaleCarne} animale mănâncă carne.");
+            Console.WriteLine($"{animalePlante} animale mănâncă plante.");
         }
     }
 }
