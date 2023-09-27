@@ -243,5 +243,3 @@ namespace T1
         }
     }
 }
-
-
